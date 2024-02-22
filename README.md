@@ -49,7 +49,7 @@ This URL should point to your frontend application. This app uses this variable 
 `METABASE_SITE_URL`
 Your Metabase instance's URL
 
-`METABASE_SHARED_SECRET`
+`METABASE_JWT_SHARED_SECRET`
 The JWT shared secret that you can find in your Metabase Admin Settings, in 
 ```
 Settings > Authentication > JWT > String used by the JWT signing key
