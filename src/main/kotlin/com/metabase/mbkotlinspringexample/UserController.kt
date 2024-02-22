@@ -2,6 +2,7 @@ package com.metabase.mbkotlinspringexample
 
 import com.metabase.mbkotlinspringexample.models.LoginRequest
 import com.metabase.mbkotlinspringexample.models.User
+import com.metabase.mbkotlinspringexample.util.AuthUtil
 import com.metabase.mbkotlinspringexample.util.JwtUtil
 import jakarta.servlet.http.HttpSession
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,17 +22,11 @@ import org.springframework.web.server.ResponseStatusException
 class UserController(
     @Autowired private val restTemplate: RestTemplate,
     @Autowired private val jwtUtil: JwtUtil,
-    @Autowired private val encryptPassword: BCryptPasswordEncoder,
+    @Autowired private val authUtil: AuthUtil,
     @Value("\${metabase.site.url}") private val siteUrl: String,
     @Value("\${client.site.url}") private val clientUrl: String,
     @Value("\${metabase.jwt.secretKey}") private val jwtSecret: String
 ) {
-
-    private val users = listOf(
-        User("admin", "admin@example.com", "Admin", "McGee", "1", "Admin", encryptPassword.encode("admin")),
-        User("user", "user@example.com", "User", "McGoo", "2", "User", encryptPassword.encode("user")),
-        User("Rene from Java", "rene@example.com", "ReneJava", "McGoo", "3", "User", encryptPassword.encode("foobar")),
-    )
 
     @GetMapping("/")
     fun index(session: HttpSession): ResponseEntity<String> {
@@ -59,16 +54,9 @@ class UserController(
         )
     }
 
-    private fun authenticate(email: String, plainPassword: String): User? {
-        val user = users.find { it.email == email }
-        return if (user != null && encryptPassword.matches(plainPassword, user.password)) {
-            user
-        } else null
-    }
-
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest, session: HttpSession): ResponseEntity<String> {
-        val user = authenticate(request.email, request.password)
+        val user = authUtil.authenticate(request.email, request.password)
         return if (user != null) {
             session.setAttribute("currentUser", user);
             ResponseEntity.ok("Success")

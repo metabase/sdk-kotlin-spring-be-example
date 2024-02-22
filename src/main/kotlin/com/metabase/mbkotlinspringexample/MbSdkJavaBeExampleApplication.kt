@@ -1,5 +1,6 @@
 package com.metabase.mbkotlinspringexample
 
+import com.metabase.mbkotlinspringexample.util.AuthUtil
 import com.metabase.mbkotlinspringexample.util.JwtUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -39,8 +40,9 @@ class MbSdkJavaBeExampleApplication {
     }
 
     @Bean
-    fun encryptPassword(): BCryptPasswordEncoder {
-        return BCryptPasswordEncoder()
+    fun authUtil() : AuthUtil {
+        val encoder = BCryptPasswordEncoder()
+        return AuthUtil(encoder)
     }
 }
 
