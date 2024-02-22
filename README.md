@@ -1,12 +1,26 @@
 #### Kotlin / Spring Boot SDK Embedding Example
 This repository replicates an example backend that will play well with the Metabase Embedding SDK. We've used Kotlin and Spring Boot for this example to show that the Metabase SDK doesn't require any specific backend infrastructure, but rather just one endpoint.
 
+## Set up Metabase
+#### Enable SSO with JWT
 
-## Setup
+From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Settings** > **Authentication**.
 
+On the card that says **JWT**, click the **Setup** button.
+
+#### JWT Identity provider URI
+
+In **JWT IDENTITY PROVIDER URI** field, paste  `localhost:8081/login`.
+
+#### String used by the JWT signing key
+
+Click the **Generate key** button. Copy the key.
+
+
+## Setup the backend
 Ensure that you've cloned this repository to your local machine first.
 
-### ** (Recommended) ** IntelliJ IDEA
+### (Recommended) IntelliJ IDEA
 This method is _by far_ the easiest (due to JetBrains creating IntelliJ and Kotlin). You'll need to install IntelliJ, then use `Open an existing project` at the root of the local version of this repo. Then, go to:
 ```
 src/main/kotlin/com/metabase/mbkotlinspringexample/MbSdkJavaBeExampleApplication.kt
@@ -18,7 +32,7 @@ You'll see a green play button to the left of `fun main`. Click that, and click 
 _Then, go to **Making sure it works**_
 
 
-#### Command Line
+### Command Line
 ###### Installing Gradle
 Ensure that you have the `gradle` package, which you can download from the gradle website. Alternatively, on MacOS, you can install the package with `brew` using 
 ```
@@ -31,7 +45,7 @@ gradle -v
 It should give you some information on its version if installed successfully.
 
 
-##### Running the app
+### Running the app
 
 Now, just run `gradle build` to build the app, then run `gradle run`. 
 
