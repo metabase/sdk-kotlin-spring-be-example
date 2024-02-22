@@ -1,3 +1,5 @@
+@file:JvmName("sdk-backend")
+
 package com.metabase.mbkotlinspringexample
 
 import com.metabase.mbkotlinspringexample.util.AuthUtil
