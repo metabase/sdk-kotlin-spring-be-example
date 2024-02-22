@@ -3,10 +3,8 @@ package com.metabase.mbkotlinspringexample.util
 import com.metabase.mbkotlinspringexample.models.User
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.springframework.stereotype.Component
 import java.util.Date
 
-@Component
 class JwtUtil {
     fun signUserToken(user: User, jwtSecret: String): String {
         val expirationSeconds = 60 * 0.25
